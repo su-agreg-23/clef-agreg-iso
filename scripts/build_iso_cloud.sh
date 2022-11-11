@@ -84,11 +84,9 @@ rm -f ${TMP}/${VERSION}-server-clouding-amd64.img ${TMP}/cloud.img
 # Montage de l'image afin de copier ses fichiers dans le futur chroot
 # Detection automatique du numero du premier secteur de la partition principale du fichier .raw
 START=$( fdisk -l -o Device,Start ${TMP}/${VERSION}.raw | grep "${VERSION}.raw1 " | gawk '{print $2}' )
-echo $START
 
 # Detection de la taille en octets d'un secteur du disque
 SECTEUR=$( fdisk -l ${TMP}/${VERSION}.raw | grep "^Unit" | gawk '{print $(NF-2)}' )
-echo $SECTEUR
 
 # Calcul de l'offset de montage (ou demarre la partition principale dans l'image raw)
 OFFSET=$(( ${START} * ${SECTEUR} ))
@@ -104,7 +102,7 @@ rsync -av --one-file-system \
       --exclude=${RAWFS}/etc/fstab \
       --exclude=${RAWFS}/etc/gshadow* \
       --exclude=${RAWFS}/etc/hosts \
-      --exclude=${RAWFS}/etc/mtab \cat /proc/cpuinfo | grep "cpu cores" | uniq | gawk '{print $4}'
+      --exclude=${RAWFS}/etc/mtab \
       --exclude=${RAWFS}/etc/shadows* \
       --exclude=${RAWFS}/etc/timezone \
       ${RAWFS}/ ${CHROOT}
@@ -164,7 +162,7 @@ echo -n $(du -s --block-size=1 ${CHROOT} | tail -1 | awk '{print $1}') | tee ${T
 # Creation des repertoires pour l'ISO, doit NECESSAIREMENT se trouver dans le CHROOT pour generer l'iso
 mkdir -p ${CD}/{${FS_DIR},boot/grub}
 
-# On met les fichiers au bon endroit maintenant que le squashfs est généré
+# On met les fichiers au bon endroit maintenant que le squashfs est gÃ©nÃ©rÃ©
 mv ${TMP}/filesystem.${FORMAT} ${CD}/${FS_DIR}/
 mv ${TMP}/filesystem.size ${CD}/${FS_DIR}/
 rm -f ${CD}/md5sum.txt
