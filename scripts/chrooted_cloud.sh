@@ -12,20 +12,23 @@ LANG=
 apt update -y
 apt upgrade -y
 
+# On determine la version du noyau
+export KERNEL_VERSION=`cd /boot && ls -1 vmlinuz-* | tail -1 | sed 's@vmlinuz-@@'`
+
 ## Ajouts pour l'iso (utilitaires pour le live et utilitaire de boot)
 apt-get install -q=2 \
 	grub-efi-amd64-signed \
 	casper \
 	lupin-casper \
 	xorriso \
-	mtools
+	mtools \
+	linux-modules-extra-${KERNEL_VERSION}
 
 cd ~/
 
 # Generer l'initramfs
-UNAMER=`ls /boot/config*`
-depmod -a ${UNAMER/\/boot\/config-/}
-update-initramfs -u -k ${UNAMER/\/boot\/config-/}
+depmod -a ${KERNEL_VERSION}
+update-initramfs -u -k ${KERNEL_VERSION}
 
 # Tout nettoyer
 apt-get autoremove -y
