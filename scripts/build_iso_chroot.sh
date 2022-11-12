@@ -129,7 +129,7 @@ echo -n $(du -s --block-size=1 ${CHROOT} | tail -1 | awk '{print $1}') | tee ${T
 # Creation des repertoires pour l'ISO, doit NECESSAIREMENT se trouver dans le CHROOT pour generer l'iso
 mkdir -p ${CD}/{${FS_DIR},boot/grub}
 
-# On met les fichiers au bon endroit maintenant que le squashfs est généré
+# On met les fichiers au bon endroit maintenant que le squashfs est gÃ©nÃ©rÃ©
 mv ${TMP}/filesystem.${FORMAT} ${CD}/${FS_DIR}/
 mv ${TMP}/filesystem.size ${CD}/${FS_DIR}/
 
@@ -151,7 +151,7 @@ mkdir -p ${CD}/boot/efi/EFI/BOOT/
 cp ${CHROOT}/usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed ${CD}/boot/efi/EFI/BOOT/grubx64.efi
 
 # Creation du grub.cfg
-rm -f ${CD}/boot/grub/grub.cfg
+rm -f ${CD}/boot/grub/{grub.cfg,*.txt,grubenv}
 echo "
 set default=\"0\"
 set timeout=10
@@ -166,15 +166,18 @@ then
 fi
 set theme=/boot/grub/theme.cfg
 menuentry \"Clef Agreg\" {
-linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" $KERNEL_PARAMS quiet splash --
+set gfxpayload=keep
+linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS quiet splash --
 initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Clef Agreg in safe mode\" {
-linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" $KERNEL_PARAMS xforcevesa quiet splash --
+set gfxpayload=keep
+linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS nomodeset quiet splash --
 initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Check Disk for Defects\" {
-linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" $KERNEL_PARAMS integrity-check quiet splash --
+set gfxpayload=keep
+linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS integrity-check quiet splash --
 initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Boot from the first hard disk\" {
