@@ -16,6 +16,9 @@ useradd -u 1000 -m -G sudo -s /bin/bash -c "Candidat Agreg" -p $(echo "concours"
 apt update -y
 apt upgrade -y
 
+# On determine la version du noyau
+export KERNEL_VERSION=`cd /boot && ls -1 vmlinuz-* | tail -1 | sed 's@vmlinuz-@@'
+
 # On ajoute la cle puis le repository pour VSCodium
 wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
     | gpg --dearmor \
@@ -146,7 +149,8 @@ apt-get install -q=2 \
 	casper \
 	lupin-casper \
 	xorriso \
-	mtools
+	mtools \
+	linux-modules-extra-${KERNEL_VERSION}
 
 ## Maintenant on passe aux scripts contenus dans runcmds de cloud-config.yaml et script/install.sh de clef-agreg
 rm /var/lib/dpkg/info/ca-certificates-java.postinst && apt install -f
@@ -159,9 +163,8 @@ cd clef-agreg && bash ./scripts/install_chroot.sh
 cd ~/
 
 # Generer l'initramfs
-UNAMER=`ls /boot/config*`
-depmod -a ${UNAMER/\/boot\/config-/}
-update-initramfs -u -k ${UNAMER/\/boot\/config-/}
+depmod -a ${KERNEL_VERSION}
+update-initramfs -u -k ${KERNEL_VERSION}
 
 # Tout nettoyer
 apt-get autoremove -y
