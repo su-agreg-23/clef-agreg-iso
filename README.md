@@ -9,5 +9,5 @@ scripts/chrooted_install.sh : script qui sera automatiquement lance dans le chro
 
 splash.png : image pour grub 
 
-En l'etat actuel: on est bloque en 800x600 et le mousepad ne marche pas, ceci est du au fait que les drivers ne s'installent pas correctement ni en VM ni en chroot ...
-(pour le chroot : probleme packagekit, pour la vm je ne sais pas trop)
+Tout marche pour la version cloud (a priori il ne manque que les docsets pour zeal)
+Pour la version chroot only, il y a toujours un probleme pour l'installation d'opam en plus.
