@@ -184,7 +184,7 @@ mkdir -p ${CD}/boot/efi/EFI/BOOT/
 cp ${CHROOT}/usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed ${CD}/boot/efi/EFI/BOOT/grubx64.efi
 
 # Creation du grub.cfg
-rm -f ${CD}/boot/grub/grub.cfg
+rm -f ${CD}/boot/grub/{grub.cfg,*.txt,grubenv}
 echo "
 set default=\"0\"
 set timeout=10
@@ -199,15 +199,18 @@ then
 fi
 set theme=/boot/grub/theme.cfg
 menuentry \"Clef Agreg\" {
-linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" $KERNEL_PARAMS quiet splash --
+set gfxpayload=keep
+linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS quiet splash --
 initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Clef Agreg in safe mode\" {
-linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" $KERNEL_PARAMS xforcevesa quiet splash --
+set gfxpayload=keep
+linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS xforcevesa quiet splash --
 initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Check Disk for Defects\" {
-linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" $KERNEL_PARAMS integrity-check quiet splash --
+set gfxpayload=keep
+linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS integrity-check quiet splash --
 initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Boot from the first hard disk\" {
