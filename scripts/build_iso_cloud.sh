@@ -205,7 +205,7 @@ initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Clef Agreg in safe mode\" {
 set gfxpayload=keep
-linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS xforcevesa quiet splash --
+linux /"${FS_DIR}"/vmlinuz boot="${FS_DIR}" \$KERNEL_PARAMS nomodeset quiet splash --
 initrd /"${FS_DIR}"/initrd.img
 }
 menuentry \"Check Disk for Defects\" {
