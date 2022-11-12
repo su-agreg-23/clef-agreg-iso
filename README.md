@@ -8,3 +8,6 @@ scripts/chrooted_cloud.sh : script qui sera automatiquement lance dans le chroot
 scripts/chrooted_install.sh : script qui sera automatiquement lance dans le chroot pour l'installation par chroot uniquement
 
 splash.png : image pour grub 
+
+En l'etat actuel: on est bloque en 800x600 et le mousepad ne marche pas, ceci est du au fait que les drivers ne s'installent pas correctement ni en VM ni en chroot ...
+(pour le chroot : probleme packagekit, pour la vm je ne sais pas trop)
