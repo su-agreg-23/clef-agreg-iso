@@ -49,11 +49,9 @@ rm -f ${TMP}/${VERSION}-server-clouding-amd64.img
 # Montage de l'image afin de copier ses fichiers dans le futur chroot
 # Detection automatique du numero du premier secteur de la partition principale du fichier .raw
 START=$( fdisk -l -o Device,Start ${TMP}/${VERSION}.raw | grep "${VERSION}.raw1 " | gawk '{print $2}' )
-echo $START
 
 # Detection de la taille en octets d'un secteur du disque
 SECTEUR=$( fdisk -l ${TMP}/${VERSION}.raw | grep "^Unit" | gawk '{print $(NF-2)}' )
-echo $SECTEUR
 
 # Calcul de l'offset de montage (ou demarre la partition principale dans l'image raw)
 OFFSET=$(( ${START} * ${SECTEUR} ))
