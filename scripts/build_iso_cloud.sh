@@ -63,7 +63,7 @@ wget https://cloud-images.ubuntu.com/${VERSION}/current/${VERSION}-server-cloudi
 cd ${RACINE}
 
 # On agrandit l'image de 14 Go pour qu'elle puisse contenir tout ce qu'on souhaite installer
-qemu-img resize ${TMP}/${VERSION}-server-cloudimg-amd64.img +14G
+qemu-img resize ${TMP}/${VERSION}-server-cloudimg-amd64.img +20G
 
 # On lance la VM avec le disque de cloud-init local:
 qemu-system-x86_64 \
@@ -260,8 +260,8 @@ chroot_after
 # On attend que l'image iso ait finit d'etre ecrite
 mv ${CHROOT}/root/clef-agreg.iso ${RACINE}/
 
+# On synchronise pour etre sur que toutes les operations sur les fichiers sont terminees
+sync
+
 # On supprime les fichiers temporaires
 rm -rf ${CHROOT} ${TMP} ${RAWFS}
-
-
-
