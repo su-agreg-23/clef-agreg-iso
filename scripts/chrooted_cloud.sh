@@ -5,6 +5,9 @@
 # Afin d'etre sur d'avoir les executables dans le chroot
 export PATH=/usr/sbin:/sbin:$PATH
 
+# On rend apt sans aucune interaction
+export DEBIAN_FRONTEND=noninteractive
+
 # Pour eviter les problemes de locale
 LANG=
 
