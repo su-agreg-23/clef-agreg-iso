@@ -224,9 +224,8 @@ chroot_after
 # On bouge l'iso dans la racine
 # On attend que l'image iso ait finit d'etre ecrite
 mv ${CHROOT}/root/clef-agreg.iso ${RACINE}/
+# On synchronise pour etre sur que toutes les operations sur les fichiers sont terminees
+sync
 
 # On supprime les fichiers temporaires
 rm -rf ${CHROOT} ${TMP} ${RAWFS}
-
-
-
