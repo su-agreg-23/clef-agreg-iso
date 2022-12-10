@@ -6,6 +6,9 @@
 # Afin d'etre sur d'avoir les executables dans le chroot
 export PATH=/usr/sbin:/sbin:$PATH
 
+# On rend apt sans aucune interaction
+export DEBIAN_FRONTEND=noninteractive
+
 # Pour eviter les problemes de locale
 LANG=
 
@@ -45,7 +48,7 @@ apt-get install -q=2 \
 apt-get install -q=2 \
 	bash-completion \
 	htop \
-	wget \
+	wget
 	
 ## Navigateurs
 apt-get install -q=2 \
@@ -155,11 +158,11 @@ apt-get install -q=2 \
 ## Maintenant on passe aux scripts contenus dans runcmds de cloud-config.yaml et script/install.sh de clef-agreg
 rm /var/lib/dpkg/info/ca-certificates-java.postinst && apt install -f
 cd ~/
-git clone https://gitlab.com/agreg-info/clef-agreg.git
+git clone https://gitlab.com/HDDSYonex/clef-agreg.git
 
 # Modifier la derniere ligne pour eviter les messages d'erreur lors du boot
-cat clef-agreg/scripts/install.sh | sed -e "s/rm -rf \/var\/lib/\#rm -rf \/var\/lib/g" > clef-agreg/scripts/install_chroot.sh
-cd clef-agreg && bash ./scripts/install_chroot.sh
+#cat clef-agreg/scripts/install.sh | sed -e "s/rm -rf \/var\/lib/\#rm -rf \/var\/lib/g" > clef-agreg/scripts/install_chroot.sh
+cd clef-agreg && bash ./scripts/install.sh
 cd ~/
 
 # Generer l'initramfs
