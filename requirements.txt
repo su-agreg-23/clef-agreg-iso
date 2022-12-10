@@ -1,0 +1,13 @@
+wheel
+numpy>=1.20
+scipy
+scikit-learn>=1
+matplotlib
+pandas>=1  # Notamment pd.read_csv
+pillow>=8.3.2
+imageio
+jupyterlab==3.3.4
+sympy
+jax[cpu]
+jinja2>=3
+# sqlite est déjà dans la bibliothèque standard
